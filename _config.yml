@@ -1,8 +1,7 @@
 title: ByteMe
 author:
   email: 'info@byteme.in'
-description: >-
-Where knowledge is shared
+description: Where knowledge is shared
 
 plugins:
   - jekyll-feed
