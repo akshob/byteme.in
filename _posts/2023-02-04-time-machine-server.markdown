@@ -129,3 +129,4 @@ sudo systemctl restart smbd avahi-daemon
 
 - [Setup Apple Time Machine network drive with Samba on Ubuntu 22.04](https://blog.jhnr.ch/2023/01/09/setup-apple-time-machine-network-drive-with-samba-on-ubuntu-22.04/)
 - [Samba as a file server](https://ubuntu.com/server/docs/samba-file-server)
+- [HowTo make time machine backups on a samba fileserver without netatalk](https://www.reddit.com/r/homelab/comments/83vkaz/howto_make_time_machine_backups_on_a_samba/)
