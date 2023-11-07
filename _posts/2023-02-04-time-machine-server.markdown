@@ -21,10 +21,13 @@ Samba's config is located at `/etc/samba/smb.conf`. Open it in your favorite edi
 
 [global]
 # Fruit global config
-  fruit:aapl = yes
-  fruit:nfs_aces = no
-  fruit:copyfile = no
+  fruit:metadata = stream
   fruit:model = MacSamba
+  fruit:posix_rename = yes
+  fruit:veto_appledouble = no
+  fruit:nfs_aces = no
+  fruit:wipe_intentionally_left_blank_rfork = yes
+  fruit:delete_empty_adfiles = yes
 
 # Permissions on new files and directories are inherited from parent directory
    inherit permissions = yes
@@ -63,17 +66,63 @@ Samba's config is located at `/etc/samba/smb.conf`. Open it in your favorite edi
   # Load in modules (order is critical!)
   vfs objects = catia fruit streams_xattr
   fruit:time machine = yes
-  fruit:time machine max size = 512G
+  fruit:time machine max size = 930G
   comment = Time Machine Backup
   path = /mnt/milkshake
   available = yes
-  valid users = pi
+  browseable = yes
+  guest ok = no
+  read only = no
+  browseable = yes
+  writable = yes
+  valid users = akshobg
+  write list = akshobg
+[icecream]
+  # Load in modules (order is critical!)
+  vfs objects = catia fruit streams_xattr
+  fruit:time machine = yes
+  # fruit:time machine max size = 930G
+  comment = Time Machine Backup
+  path = /mnt/icecream
+  available = yes
+  browseable = yes
+  guest ok = yes
+  writable = yes
+[cupcake]
+  comment = Media Disk
+  path = /mnt/cupcake
+  available = yes
+  browseable = yes
+  guest ok = yes
+  writable = yes
+[blackbear]
+  comment = Media and Backup Disk
+  path = /mnt/blackbear
+  available = yes
+  valid users = akshobg
   browseable = yes
   guest ok = no
   writable = yes
 ```
 
 > Note: I usually add other backup disks that I can `smb://` into and copy files to. I also add a `public` share that is accessible by everyone. So I've not disabled mDNS registration (I've removed `multicast dns register = no` from the conf).
+
+## Create Samba users
+
+```bash
+sudo smbpasswd -a akshobg
+```
+
+If you miss this step you will get an error when you try to connect to the network drive.
+
+```bash
+Failed to get resource value 'NSURLIsUserImmutableKey' for 
+'/Volumes/.timemachine/<SERVERNAME>._smb._tcp.local./<UUID>/TimeMachine/<UUID>.sparsebundle/token', error: Error 
+Domain=NSCocoaErrorDomain Code=257 "The file “token” couldn’t be opened because you don’t have permission to view it." 
+UserInfo={NSURL=file:///Volumes/.timemachine/<SERVERNAME>._smb._tcp.local./<UUID>/TimeMachine/<UUID>.sparsebundle
+/token, NSFilePath=/Volumes/.timemachine/<SERVERNAME>_smb._tcp.local./<UUID>/TimeMachine/<UUID>.sparsebundle/token,  
+NSUnderlyingError=0x7feb0a776f90 {Error Domain=NSPOSIXErrorDomain Code=13 "Permission denied"}}
+```
 
 ## Configure Avahi
 
@@ -103,8 +152,9 @@ and add the following lines
   </service>
   <service>
     <type>_adisk._tcp</type>
-    <txt-record>dk0=adVN=milkshake,adVF=0x82</txt-record>
     <txt-record>sys=waMa=0,adVF=0x100</txt-record>
+    <txt-record>dk0=adVN=milkshake,adVF=0x82</txt-record>
+    <txt-record>dk1=adVN=icecream,adVF=0x82</txt-record>
   </service>
 </service-group>
 ```
@@ -130,3 +180,4 @@ sudo systemctl restart smbd avahi-daemon
 - [Setup Apple Time Machine network drive with Samba on Ubuntu 22.04](https://blog.jhnr.ch/2023/01/09/setup-apple-time-machine-network-drive-with-samba-on-ubuntu-22.04/)
 - [Samba as a file server](https://ubuntu.com/server/docs/samba-file-server)
 - [HowTo make time machine backups on a samba fileserver without netatalk](https://www.reddit.com/r/homelab/comments/83vkaz/howto_make_time_machine_backups_on_a_samba/)
+- [Configure Samba to Work Better with Mac OS X](https://wiki.samba.org/index.php/Configure_Samba_to_Work_Better_with_Mac_OS_X)
