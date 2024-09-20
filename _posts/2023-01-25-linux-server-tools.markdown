@@ -66,6 +66,10 @@ Mounting HFS+ drives:
 
 > Pro Tip: To test fstab without rebooting, use the command: `sudo mount -a`
 
+Sometimes HFS+ filesystems are mounted as read-only, probably due to a recent power failure.
+Checking `sudo dmesg` you will see: `hfsplus: Filesystem was not cleanly unmounted, running fsck.hfsplus is recommended.  mounting read-only.`
+Unmounting the drive, running `sudo fsck.hfsplus /dev/sdXX` to reset a flag, and afterward `sudo mount -a` re-mounted the drive read-write, per the configuration in `/etc/fstab`.
+
 ## Plex Media Server
 
 ```bash
