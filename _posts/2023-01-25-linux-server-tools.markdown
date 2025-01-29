@@ -148,3 +148,7 @@ sudo systemctl enable qbittorrent
 ```
 
 Access the web interface via `http://[YOUR IP ADDRESS]:8080`. The default username for this interface is `admin`, and the default password is `adminadmin`. You can change these settings by clicking on the "Tools" menu and selecting "Options". From there, click on "Web UI" in the sidebar. You can change the username and password from there. You can whitelist your local subnet by selecting "Bypass authentication for clients in whitelisted IP subnets". Whitelist local subnet `192.168.x.0/24`
+
+> Logs: `sudo less /home/qbittorrent/.local/share/qBittorrent/logs/qbittorrent.log`
+
+> Fixing samba share issues: https://forum.qbittorrent.org/viewtopic.php?p=43380
