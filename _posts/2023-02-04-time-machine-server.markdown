@@ -95,6 +95,7 @@ Samba's config is located at `/etc/samba/smb.conf`. Open it in your favorite edi
   browseable = yes
   guest ok = yes
   writable = yes
+  force user = akshobg
 [blackbear]
   comment = Media and Backup Disk
   path = /mnt/blackbear
@@ -106,6 +107,8 @@ Samba's config is located at `/etc/samba/smb.conf`. Open it in your favorite edi
 ```
 
 > Note: I usually add other backup disks that I can `smb://` into and copy files to. I also add a `public` share that is accessible by everyone. So I've not disabled mDNS registration (I've removed `multicast dns register = no` from the conf).
+
+> Public samba share: https://askubuntu.com/a/1453560
 
 ## Create Samba users
 
