@@ -152,3 +152,12 @@ Access the web interface via `http://[YOUR IP ADDRESS]:8080`. The default userna
 > Logs: `sudo less /home/qbittorrent/.local/share/qBittorrent/logs/qbittorrent.log`
 
 > Fixing samba share issues: https://forum.qbittorrent.org/viewtopic.php?p=43380
+
+## X11
+
+Install [XQuartz](https://www.xquartz.org/) on macOS to get X11 forwarding to work via `ssh`.
+
+```bash
+sudo apt-get install -y mesa-utils libgl1-mesa-dri
+sudo apt-get install -y xdg-utils
+```
